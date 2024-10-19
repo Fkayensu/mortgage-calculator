@@ -33,18 +33,7 @@ Where:
    - The remaining balance for each payment throughout the entire period.
 
 ## Example
-
-- Principal ($1K - $1M): 100000 
-- Annual Interest Rate: 5 
-- Period (Years): 20
-
-### MORTGAGE
-Monthly Payments: $659.96
-
-### PAYMENT SCHEDULE
-- $99,340.04 
-- $98,675.71 ...
-
+<img width="933" alt="Screenshot 2024-10-19 at 6 09 35 PM" src="https://github.com/user-attachments/assets/7c0202bb-6ddf-444d-b9ae-ad909ed0ef77">
 
 ## Installation and Setup
 
