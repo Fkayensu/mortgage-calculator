@@ -1,11 +1,13 @@
 # Mortgage Calculator
 
-This Java program calculates the monthly mortgage payment and provides a payment schedule based on the provided principal, annual interest rate, and period (years). It prompts the user for input and outputs the mortgage details as well as the remaining balance after each monthly payment.
+This Java program calculates the monthly mortgage payment and provides a payment schedule based on the provided principal, annual interest rate, and period (years). It features an object-oriented design to improve modularity and readability.
 
 ## Features
 
+- **Object-Oriented Design**: Implements interfaces and classes to separate concerns and enable extensibility.
 - **Monthly Mortgage Calculation**: Calculates and displays the monthly mortgage payment based on the principal, annual interest rate, and loan period.
 - **Payment Schedule**: Displays the remaining balance of the loan after each monthly payment for the full loan period.
+- **Console Input Validation**: Ensures user inputs are within valid ranges.
 
 ## How It Works
 
@@ -39,17 +41,22 @@ Where:
 
 1. Clone this repository to your local machine.
 2. Ensure you have the Java Development Kit (JDK) installed.
-3. Compile the program:
+3. Compile all classes:
 
-   ```javac MortgageCalculator.java```
-4. Run the program 
+   ```sh
+   javac Main.java MortgageCalculator.java Console.java MortgageReport.java MortgageCalculationService.java
+   ```
+4. Run the program:
 
-   ```java MortgageCalculator ```
+   ```sh
+   java Main
+   ```
 
 ## Code Explanation
-- readNumber: Reads and validates user input for principal, interest rate and period.
-- mortgageCalculator: Calculates the monthly mortgage payment using the given formula.
-- paymentScheduleCalculator: Calculates the remaining loan balance after each payment.
-- printMortgage: Displays the formatted monthly mortgage payment.
-- printPaymentSchedule: Displays the full payment schedule.
 
+### Key Classes and Interfaces
+- **`Main`**: The entry point, handles user interaction and ties together the components.
+- **`MortgageCalculator`**: Implements `MortgageCalculationService` for calculating mortgages and payment schedules.
+- **`MortgageCalculationService`**: Defines methods for mortgage calculation, payment schedules, and payment generation.
+- **`Console`**: Handles user input with validation.
+- **`MortgageReport`**: Formats and displays the mortgage and payment schedule.
