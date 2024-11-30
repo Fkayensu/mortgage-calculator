@@ -1,16 +1,44 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class MortgageCalculator {
-    final static byte MONTHS_IN_YEAR = 12;
-    final static float PERCENTAGE = 0.01F;
+public class MortgageCalculator implements MortgageCalculationService {
+    private final float PERCENTAGE = 0.01F;
+    private final byte MONTHS_IN_YEAR = 12;
+    
+    private int principal;
+    private double annualInterest;
+    private byte period;
 
-    public static void main(String[] args) {
-        int principal = (int) Console.readNumber("Principal ($1K - $1M): ", 1_000, 1_000_000);
-        double annualInterestRate = Console.readNumber("Annual Interest Rate: ", 0, 30);
-        byte period = (byte) Console.readNumber("Period (Years): ", 1, 30);
-
-        MortgageReport.printMortgage(principal, annualInterestRate, period);
-        MortgageReport.printPaymentSchedule(period, principal, annualInterestRate);
+    public MortgageCalculator(int principal, double annualInterest, byte period) {
+        this.principal = principal;
+        this.annualInterest = annualInterest;
+        this.period = period;
     }
 
+    @Override
+    public double mortgageCalculator() {
+        double unitFormula = Math.pow((1 + getMonthlyInterestRate()), getNumberOfPayments());
+        return (principal) * ((getMonthlyInterestRate() * (unitFormula)) / ((unitFormula) - 1));
+    }
+
+    @Override
+    public double paymentScheduleCalculator(int numberOfPaymentsMade) {
+        return (principal * (Math.pow(1 + getMonthlyInterestRate(), getNumberOfPayments()) -
+                Math.pow(1 + getMonthlyInterestRate(), numberOfPaymentsMade))) /
+                (Math.pow(1 + getMonthlyInterestRate(), getNumberOfPayments()) - 1);
+    }
+
+    @Override
+    public double[] payments() {
+        var balance = new double[getNumberOfPayments()];
+        for (int numberOfPaymentsMade = 1; numberOfPaymentsMade <= balance.length; ++numberOfPaymentsMade) {
+            balance[numberOfPaymentsMade - 1] = paymentScheduleCalculator(numberOfPaymentsMade);
+        }
+        return balance;
+    }
+
+    public int getNumberOfPayments() {
+        return period * MONTHS_IN_YEAR;
+    }
+
+    public double getMonthlyInterestRate() {
+        return (PERCENTAGE * annualInterest) / MONTHS_IN_YEAR;
+    }
 }

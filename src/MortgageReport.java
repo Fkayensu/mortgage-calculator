@@ -1,30 +1,29 @@
 import java.text.NumberFormat;
 
 public class MortgageReport {
+    private final NumberFormat currency = NumberFormat.getCurrencyInstance();
+    private MortgageCalculationService calculator;
 
-    private static CalculateMortgage calculator;
+    public MortgageReport(MortgageCalculator calculator) {
+        this.calculator = calculator;
+    }
 
-    public static void printMortgage(int principal, double annualInterestRate, byte period) {
-        calculator = new CalculateMortgage(principal, annualInterestRate, period);
+    public void printPaymentSchedule(byte period) {
+        System.out.println();
+        System.out.println("PAYMENT SCHEDULE");
+        System.out.println("----------------");
+        for (double payment:calculator.payments()) {
+            String balanceFormatted = currency.format(payment);
+            System.out.println(balanceFormatted);
+        }
+    }
+
+    public void printMortgage() {
         double mortgage = calculator.mortgageCalculator();
-        String mortgageFormatted = NumberFormat.getCurrencyInstance().format(mortgage);
+        String mortgageFormatted = currency.format(mortgage);
         System.out.println();
         System.out.println("MORTGAGE");
         System.out.println("--------");
         System.out.println("Monthly Payments: " + mortgageFormatted);
-    }
-
-    public static void printPaymentSchedule(byte period, int principal, double annualInterestRate) {
-        System.out.println();
-        System.out.println("PAYMENT SCHEDULE");
-        System.out.println("----------------");
-        int numberOfPaymentsMade = 0;
-        int totalNumberOfPayments = MortgageCalculator.MONTHS_IN_YEAR * period;
-        for (int i = 0; i < totalNumberOfPayments; i++) {
-            ++numberOfPaymentsMade;
-            double balance = calculator.paymentScheduleCalculator(numberOfPaymentsMade);
-            String balanceFormatted = NumberFormat.getCurrencyInstance().format(balance);
-            System.out.println(balanceFormatted);
-        }
     }
 }
